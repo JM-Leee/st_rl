@@ -2,8 +2,10 @@ import streamlit as st
 import numpy as np
 import pickle
 import plotly.graph_objs as go
+import gymnasium as gym
 from stable_baselines3 import PPO
 from gymnasium import Env, spaces
+from stable_baselines3.common.callbacks import BaseCallback
 
 # Custom environment class
 class ModifiedQuadraticEnv(Env):
