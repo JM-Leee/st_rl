@@ -13,7 +13,7 @@ class ModifiedQuadraticEnv(Env):
         super(ModifiedQuadraticEnv, self).__init__()
         self.action_space = spaces.MultiDiscrete([201, 201])  # -100부터 100까지의 정수 값
         self.observation_space = spaces.Box(low=-100, high=100, shape=(2,), dtype=np.float32)
-        self.state = np.random.uniform(low=-100, high=100, size=(2,))
+        self.state = np.random.uniform(low=-50, high=50, size=(2,))
     
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -27,7 +27,8 @@ class ModifiedQuadraticEnv(Env):
         self.state = np.array([x_action, y_action], dtype=np.float32)
         x, y = self.state
         z = 2 * x**2 + y**2 + 100
-        reward = -z**3  # z값이 작아질수록 보상이 커짐
+        # reward = -z**3  # z값이 작아질수록 보상이 커짐
+        reward = -z / 1000  # z 값을 적당히 나누어서 보상 계산
         done = False
         if z < 101:  # 충분히 작은 z 값에 도달하면 종료
             done = True
@@ -54,7 +55,15 @@ env = ModifiedQuadraticEnv()
 # Train button
 if st.button('Start Training'):
     with st.spinner('Training the model...'):
-        model = PPO('MlpPolicy', env, verbose=1)
+        model = PPO(
+                        'MlpPolicy', 
+                        env, 
+                        verbose=1, 
+                        n_steps=2048, 
+                        batch_size=64, 
+                        n_epochs=10, 
+                        learning_rate=0.0003
+                    )
         st.session_state.model = model
 
         class ZValueCallback(BaseCallback):
@@ -80,7 +89,7 @@ if st.button('Start Training'):
                 st.success("Training data saved.")
         
         z_value_callback = ZValueCallback()
-        model.learn(total_timesteps=50000, callback=z_value_callback)
+        model.learn(total_timesteps=100000, callback=z_value_callback)
         model.save("ppo_modified_quadratic_streamlit")
         st.success("Model training completed and saved!")
 
