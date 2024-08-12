@@ -1,6 +1,6 @@
 streamlit
-stable-baselines3[extra]  # stable-baselines3와 함께 필요한 추가 라이브러리 포함
-gymnasium
+stable-baselines3[extra]==1.7.0
+gymnasium==0.28.1
 numpy
 plotly
 matplotlib
