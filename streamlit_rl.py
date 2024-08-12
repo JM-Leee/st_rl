@@ -27,7 +27,7 @@ class ModifiedQuadraticEnv(Env):
         self.state = np.array([x_action, y_action], dtype=np.float32)
         x, y = self.state
         z = 2 * x**2 + y**2 + 100
-        reward = -z / 10  # z값이 작아질수록 보상이 커짐
+        reward = -z**3  # z값이 작아질수록 보상이 커짐
         done = False
         if z < 101:  # 충분히 작은 z 값에 도달하면 종료
             done = True
