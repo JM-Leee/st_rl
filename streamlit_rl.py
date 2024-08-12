@@ -95,11 +95,11 @@ if st.session_state.training_data:
     z_value_fig.update_layout(title="Z Value per Step During Training", xaxis_title="Step", yaxis_title="Z Value")
     st.plotly_chart(z_value_fig)
 
-    # Plot path graph
-    path_fig = go.Figure(data=go.Scatter(x=states_visited[:, 0], y=states_visited[:, 1], mode='lines+markers'))
-    path_fig.add_trace(go.Scatter(x=[0], y=[0], mode='markers', marker=dict(color='red', size=10), name='Target'))
-    path_fig.update_layout(title="States Visited Over Time", xaxis_title="X", yaxis_title="Y")
-    st.plotly_chart(path_fig)
+    # # Plot path graph
+    # path_fig = go.Figure(data=go.Scatter(x=states_visited[:, 0], y=states_visited[:, 1], mode='lines+markers'))
+    # path_fig.add_trace(go.Scatter(x=[0], y=[0], mode='markers', marker=dict(color='red', size=10), name='Target'))
+    # path_fig.update_layout(title="States Visited Over Time", xaxis_title="X", yaxis_title="Y")
+    # st.plotly_chart(path_fig)
 
     final_state = states_visited[-1]
     x, y = final_state
